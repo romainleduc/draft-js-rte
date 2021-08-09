@@ -4,16 +4,12 @@ import { EditorContext } from '../components/Editor';
 import EditorThemeContext from '../components/EditorProvider/EditorProviderContext';
 import useToggle from './useToggle';
 
-interface useInlineToggleProps {
+interface Options {
   /**
    * If `true`, inline style will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
-  /**
-   * The inline style value to associate with the button
-   */
-  value: string;
   /**
    *
    */
@@ -30,16 +26,15 @@ interface useInlineToggleProps {
   ) => void;
 }
 
-const useInlineToggle = ({
-  disableKeyboardShortcuts,
-  value,
-  defaultSelected,
-  onClick,
-  onMouseDown,
-}: useInlineToggleProps) => {
+const useInline = (
+  /**
+   * The inline style value to associate with the button
+   */
+    value: string,
+    options: Options
+) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
-  const { customStyleMaps, getCustomStyleMapOfKey } =
-    useContext(EditorThemeContext);
+  const { customStyleMaps, getCustomStyleMapOfKey } = useContext(EditorThemeContext);
 
   const handleToggle = useCallback(
     (newEditorState: EditorState): void => {
@@ -97,18 +92,15 @@ const useInlineToggle = ({
   );
 
   const props = useToggle({
-    disableKeyboardShortcuts,
     keyCommand: value.toLowerCase(),
-    defaultSelected,
-    onClick,
-    onMouseDown,
     onToggle: handleToggle,
+    ...options,
   });
 
   return {
     ...props,
-    selected: editorState?.getCurrentInlineStyle().toArray().includes(value),
+    selected: editorState ? editorState.getCurrentInlineStyle().toArray().includes(value) : false,
   };
 };
 
-export default useInlineToggle;
+export default useInline;
