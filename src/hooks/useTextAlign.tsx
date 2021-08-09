@@ -4,9 +4,9 @@ import { setBlockData, setBlocksData } from '../utils';
 import { EditorContext } from '../components/Editor';
 import useToggle from './useToggle';
 
-interface useInlineToggleProps {
+interface Options {
   /**
-   * If `true`, inline style will not be available from keyboard shortcuts
+   * If `true`, align will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
@@ -34,14 +34,13 @@ interface useInlineToggleProps {
   ) => void;
 }
 
-const useTextAlignToggle = ({
-  disableKeyboardShortcuts,
-  value,
-  defaultSelected,
-  ignoreSelection,
-  onClick,
-  onMouseDown,
-}: useInlineToggleProps) => {
+const useTextAlignToggle = (
+  /**
+   * The align value to associate with the button
+   */
+  value: string,
+  ignoreSelection?: boolean
+) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
   const handleToggle = useCallback(
@@ -75,26 +74,37 @@ const useTextAlignToggle = ({
     [ignoreSelection]
   );
 
-  const props = useToggle({
-    disableKeyboardShortcuts,
-    keyCommand: `align-${value}`,
-    defaultSelected,
-    onClick,
-    onMouseDown,
-    onToggle: handleToggle,
-  });
-
   return {
-    ...props,
-    selected:
-      editorState &&
+    keyCommand: `align-${value}`,
+    onToggle: handleToggle,
+    selected: editorState &&
       editorState
         .getCurrentContent()
         .getBlockForKey(editorState.getSelection().getStartKey())
         .getData()
         .toArray()
         .includes(value),
+  }
+}
+
+const useTextAlign = (
+  /**
+ * The align value to associate with the button
+ */
+  value: string,
+  options?: Options
+) => {
+  const { keyCommand, onToggle, selected } = useTextAlignToggle(value, options?.ignoreSelection);
+  const props = useToggle({
+    keyCommand,
+    onToggle,
+    ...options,
+  });
+
+  return {
+    ...props,
+    selected,
   };
 };
 
-export default useTextAlignToggle;
+export default useTextAlign;

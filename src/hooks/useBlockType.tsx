@@ -3,14 +3,14 @@ import React, { useCallback, useContext } from 'react';
 import { EditorContext } from '../components/Editor';
 import useToggle from './useToggle';
 
-interface useInlineToggleProps {
+interface Options {
   /**
-   * If `true`, inline style will not be available from keyboard shortcuts
+   * If `true`, block type will not be available from keyboard shortcuts
    * @default false
    */
   disableKeyboardShortcuts?: boolean;
   /**
-   * The inline style value to associate with the button
+   * The block type value to associate with the button
    */
   value: string;
   /**
@@ -29,13 +29,12 @@ interface useInlineToggleProps {
   ) => void;
 }
 
-const useBlockTypeToggle = ({
-  disableKeyboardShortcuts,
-  value,
-  defaultSelected,
-  onClick,
-  onMouseDown,
-}: useInlineToggleProps) => {
+const useBlockTypeToggle = (
+  /**
+   * The block type value to associate with the button
+   */
+  value: string
+) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
 
   const handleToggle = useCallback(
@@ -45,20 +44,32 @@ const useBlockTypeToggle = ({
     [value]
   );
 
-  const props = useToggle({
-    disableKeyboardShortcuts,
+  return {
     keyCommand: value,
-    defaultSelected,
-    onClick,
-    onMouseDown,
     onToggle: handleToggle,
+    selected: editorState && value === RichUtils.getCurrentBlockType(editorState),
+  }
+}
+
+const useBlockType = (
+  /**
+   * The block type value to associate with the button
+   */
+  value: string,
+  options: Options
+) => {
+  const { selected, onToggle, keyCommand } = useBlockTypeToggle(value);
+
+  const props = useToggle({
+    keyCommand,
+    onToggle,
+    ...options
   });
 
   return {
     ...props,
-    selected:
-      editorState && value === RichUtils.getCurrentBlockType(editorState),
+    selected,
   };
 };
 
-export default useBlockTypeToggle;
+export default useBlockType;

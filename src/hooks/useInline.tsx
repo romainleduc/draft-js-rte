@@ -26,12 +26,11 @@ interface Options {
   ) => void;
 }
 
-const useInline = (
+const useInlineToggle = (
   /**
    * The inline style value to associate with the button
    */
-    value: string,
-    options: Options
+  value: string
 ) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
   const { customStyleMaps, getCustomStyleMapOfKey } = useContext(EditorThemeContext);
@@ -91,15 +90,31 @@ const useInline = (
     [customStyleMaps, value]
   );
 
-  const props = useToggle({
+  return {
     keyCommand: value.toLowerCase(),
     onToggle: handleToggle,
+    selected: editorState ? editorState.getCurrentInlineStyle().toArray().includes(value) : false,
+  }
+}
+
+const useInline = (
+  /**
+   * The inline style value to associate with the button
+   */
+    value: string,
+    options?: Options
+) => {
+  const { keyCommand, onToggle, selected } = useInlineToggle(value);
+
+  const props = useToggle({
+    keyCommand,
+    onToggle,
     ...options,
   });
 
   return {
     ...props,
-    selected: editorState ? editorState.getCurrentInlineStyle().toArray().includes(value) : false,
+    selected,
   };
 };
 
