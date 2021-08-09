@@ -12,13 +12,11 @@ export interface EditorTestProviderProps
   noSsr?: boolean;
 }
 
-const EditorTestProvider = (
-  {
-    editorState,
-    onChange,
-    children,
-  }: EditorTestProviderProps,
-) => {
+const EditorTestProvider = ({
+  editorState,
+  onChange,
+  children,
+}: EditorTestProviderProps) => {
   const [state, dispatch] = useReducer(keyCommandsReducer, initialState);
 
   return (
@@ -33,7 +31,7 @@ const EditorTestProvider = (
       </EditorContext.Provider>
     </ReduxContext.Provider>
   );
-}
+};
 
 EditorTestProvider.displayName = 'EditorTestProvider';
 

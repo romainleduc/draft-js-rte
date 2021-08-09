@@ -64,7 +64,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     const { customStyleMaps } = useContext(EditorProviderContext);
     // const classes = userStyles();
 
-    console.log(editorState)
+    console.log(editorState);
 
     const isNotEmpty = () => {
       const contentState = editorState?.getCurrentContent();
@@ -144,7 +144,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     };
 
     const handleChange = (newEditorState: EditorState) => {
-      console.log('passe la ???')
+      console.log('passe la ???');
       if (onChange) {
         onChange(draftToHtml(newEditorState.getCurrentContent()));
       }
@@ -156,7 +156,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       <div
         className={clsx(
           'draft-editor',
-          className,
+          className
           // isNotEmpty() && classes.hidePlaceholder,
           // classes.editor
         )}

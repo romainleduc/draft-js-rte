@@ -77,24 +77,28 @@ const useTextAlignToggle = (
   return {
     keyCommand: `align-${value}`,
     onToggle: handleToggle,
-    selected: editorState &&
+    selected:
+      editorState &&
       editorState
         .getCurrentContent()
         .getBlockForKey(editorState.getSelection().getStartKey())
         .getData()
         .toArray()
         .includes(value),
-  }
-}
+  };
+};
 
 const useTextAlign = (
   /**
- * The align value to associate with the button
- */
+   * The align value to associate with the button
+   */
   value: string,
   options?: Options
 ) => {
-  const { keyCommand, onToggle, selected } = useTextAlignToggle(value, options?.ignoreSelection);
+  const { keyCommand, onToggle, selected } = useTextAlignToggle(
+    value,
+    options?.ignoreSelection
+  );
   const props = useToggle({
     keyCommand,
     onToggle,

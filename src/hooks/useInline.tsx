@@ -33,7 +33,8 @@ const useInlineToggle = (
   value: string
 ) => {
   const { editorState, setEditorState } = useContext(EditorContext) || {};
-  const { customStyleMaps, getCustomStyleMapOfKey } = useContext(EditorThemeContext);
+  const { customStyleMaps, getCustomStyleMapOfKey } =
+    useContext(EditorThemeContext);
 
   const handleToggle = useCallback(
     (newEditorState: EditorState): void => {
@@ -93,16 +94,18 @@ const useInlineToggle = (
   return {
     keyCommand: value.toLowerCase(),
     onToggle: handleToggle,
-    selected: editorState ? editorState.getCurrentInlineStyle().toArray().includes(value) : false,
-  }
-}
+    selected: editorState
+      ? editorState.getCurrentInlineStyle().toArray().includes(value)
+      : false,
+  };
+};
 
 const useInline = (
   /**
    * The inline style value to associate with the button
    */
-    value: string,
-    options?: Options
+  value: string,
+  options?: Options
 ) => {
   const { keyCommand, onToggle, selected } = useInlineToggle(value);
 

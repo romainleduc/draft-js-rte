@@ -26,7 +26,6 @@ export const AtomicImage = ({
   sourcesProps,
   ...other
 }: AtomicImageProps): JSX.Element => {
-
   return (
     <>
       {!sourcesProps ? (

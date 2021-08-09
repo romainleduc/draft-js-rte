@@ -47,9 +47,10 @@ const useBlockTypeToggle = (
   return {
     keyCommand: value,
     onToggle: handleToggle,
-    selected: editorState && value === RichUtils.getCurrentBlockType(editorState),
-  }
-}
+    selected:
+      editorState && value === RichUtils.getCurrentBlockType(editorState),
+  };
+};
 
 const useBlockType = (
   /**
@@ -63,7 +64,7 @@ const useBlockType = (
   const props = useToggle({
     keyCommand,
     onToggle,
-    ...options
+    ...options,
   });
 
   return {
