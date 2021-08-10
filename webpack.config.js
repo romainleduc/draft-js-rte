@@ -12,9 +12,10 @@ module.exports = {
     filename: 'index.js',
     library: 'draftJsRte',
     libraryTarget: 'umd',
-    globalObject: `(typeof self !== 'undefined' ? self : this)`,
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [new MiniCssExtractPlugin({
+    filename: 'Draft.css',
+  })],
   module: {
     rules: [
       {

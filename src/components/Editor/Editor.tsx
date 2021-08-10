@@ -17,6 +17,7 @@ import {
 } from '../../utils/editorUtils';
 import EditorProviderContext from '../EditorProvider/EditorProviderContext';
 import clsx from 'clsx';
+import './Editor.css';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -26,28 +27,6 @@ export interface EditorProps
   onChange?(html: string): void;
   onClick?: (event: any, editorState: EditorState | undefined) => void;
 }
-
-// const userStyles = makeStyles({
-//   editor: {
-//     '& .public-DraftStyleDefault-ltr': {
-//       textAlign: 'inherit',
-//     },
-//     '& .align-left': {
-//       textAlign: 'left',
-//     },
-//     '& .align-center': {
-//       textAlign: 'center',
-//     },
-//     '& .align-right': {
-//       textAlign: 'right',
-//     },
-//   },
-//   hidePlaceholder: {
-//     '& .public-DraftEditorPlaceholder-root': {
-//       display: 'none',
-//     },
-//   },
-// });
 
 enum IndentCommand {
   Increase = 'increase-indent',
@@ -60,11 +39,8 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
-    const { state, dispatch } = useContext(ReduxContext);
+    const { state } = useContext(ReduxContext);
     const { customStyleMaps } = useContext(EditorProviderContext);
-    // const classes = userStyles();
-
-    console.log(editorState);
 
     const isNotEmpty = () => {
       const contentState = editorState?.getCurrentContent();
@@ -144,7 +120,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     };
 
     const handleChange = (newEditorState: EditorState) => {
-      console.log('passe la ???');
       if (onChange) {
         onChange(draftToHtml(newEditorState.getCurrentContent()));
       }
@@ -155,10 +130,9 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     return (
       <div
         className={clsx(
-          'draft-editor',
-          className
-          // isNotEmpty() && classes.hidePlaceholder,
-          // classes.editor
+          className,
+          'DraftEditor-container',
+          isNotEmpty() && 'DraftEditor-hidePlaceholder'
         )}
         onClick={(event) => onClick?.(event, editorState)}
       >

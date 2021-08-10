@@ -1,0 +1,19 @@
+.DraftEditor-container.DraftEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.public-DraftStyleDefault-ltr {
+  text-align: inherit;
+}
+
+.align-left {
+ text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+}
