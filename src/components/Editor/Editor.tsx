@@ -26,6 +26,7 @@ export interface EditorProps
   keyBinding?: string[];
   onChange?(html: string): void;
   onClick?: (event: any, editorState: EditorState | undefined) => void;
+  wrapperProps?: any;
 }
 
 enum IndentCommand {
@@ -35,19 +36,19 @@ enum IndentCommand {
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
   (
-    { className, keyCommands, onChange, onClick, ...rest }: EditorProps,
+    { className, keyCommands, onChange, onClick, wrapperProps, ...rest }: EditorProps,
     ref
   ) => {
     const { editorState, setEditorState } = useContext(EditorContext) || {};
     const { state } = useContext(ReduxContext);
     const { customStyleMaps } = useContext(EditorProviderContext);
 
-    const isNotEmpty = () => {
+    const shouldHidePlaceholder = () => {
       const contentState = editorState?.getCurrentContent();
 
       if (contentState) {
         return (
-          contentState.hasText() ||
+          !contentState.hasText() &&
           contentState.getFirstBlock().getType() !== 'unstyled'
         );
       }
@@ -132,9 +133,10 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         className={clsx(
           className,
           'DraftEditor-container',
-          isNotEmpty() && 'DraftEditor-hidePlaceholder'
+          shouldHidePlaceholder() && 'DraftEditor-hidePlaceholder'
         )}
         onClick={(event) => onClick?.(event, editorState)}
+        {...wrapperProps}
       >
         {editorState && setEditorState && (
           <DraftEditor
