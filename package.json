@@ -49,7 +49,7 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^12.0.0",
     "@types/draft-js": "^0.11.4",
-    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
