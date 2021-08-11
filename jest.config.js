@@ -4,5 +4,8 @@ module.exports = {
     'utils',
   __dirname,
   ],
+  moduleNameMapper: {
+    "\\.(css)$": "identity-obj-proxy"
+  },
   verbose: true,
 }

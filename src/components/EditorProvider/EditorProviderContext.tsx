@@ -1,3 +1,4 @@
+import { EditorState } from 'draft-js';
 import React from 'react';
 
 export interface CustomStyleMap {
@@ -6,14 +7,18 @@ export interface CustomStyleMap {
   styles: any;
 }
 
-const EditorThemeContext = React.createContext<{
+const EditorProviderContext = React.createContext<{
+  editorState: EditorState;
+  setEditorState(editorState: EditorState): void;
   customStyleMaps: CustomStyleMap[];
   getCustomStyleMapOfKey: (key: string) => any;
   getCustomStyleMap: (group: string) => any;
 }>({
+  editorState: EditorState.createEmpty(),
+  setEditorState: () => {},
   customStyleMaps: [],
   getCustomStyleMapOfKey: () => {},
   getCustomStyleMap: () => {},
 });
 
-export default EditorThemeContext;
+export default EditorProviderContext;

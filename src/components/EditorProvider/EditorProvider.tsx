@@ -1,15 +1,24 @@
-import React from 'react';
-import EditorContext, { CustomStyleMap } from './EditorProviderContext';
+import React, { useReducer } from 'react';
+import { EditorState } from 'draft-js';
+import EditorProviderContext, { CustomStyleMap } from './EditorProviderContext';
+import keyCommandsReducer, { initialState } from '../../redux/reducers/keyCommandsReducer';
+import ReduxContext from '../ReduxContext';
 
 export interface EditorProviderProps {
-  customStyleMaps: CustomStyleMap[];
+  customStyleMaps?: CustomStyleMap[];
+  editorState: EditorState;
+  onChange(editorState: EditorState): void;
   children: any;
 }
 
 const EditorProvider = ({
-  customStyleMaps,
+  customStyleMaps = [],
+  editorState,
+  onChange,
   children,
 }: EditorProviderProps): JSX.Element => {
+  const [state, dispatch] = useReducer(keyCommandsReducer, initialState);
+
   const getCustomStyleMapOfKey = (key: string) => {
     return customStyleMaps.find((customStyleMap) =>
       Object.keys(customStyleMap.styles)
@@ -25,15 +34,19 @@ const EditorProvider = ({
   };
 
   return (
-    <EditorContext.Provider
-      value={{
-        customStyleMaps,
-        getCustomStyleMapOfKey,
-        getCustomStyleMap,
-      }}
-    >
-      {children}
-    </EditorContext.Provider>
+    <ReduxContext.Provider value={{ state, dispatch }}>
+      <EditorProviderContext.Provider
+        value={{
+          editorState,
+          setEditorState: onChange,
+          customStyleMaps,
+          getCustomStyleMapOfKey,
+          getCustomStyleMap,
+        }}
+      >
+        {children}
+      </EditorProviderContext.Provider>
+    </ReduxContext.Provider>
   );
 };
 

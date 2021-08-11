@@ -1,8 +1,7 @@
-export { Editor, EditorProvider, EditorTestProvider } from './components';
+export { Editor, EditorProvider } from './components';
 export type {
   EditorProps,
   EditorProviderProps,
-  EditorTestProviderProps,
 } from './components';
 
 export { useBlockType, useInline, useTextAlign } from './hooks';
