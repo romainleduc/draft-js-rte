@@ -1,7 +1,7 @@
 import { EditorState } from 'draft-js';
 import React, { useCallback, useContext } from 'react';
 import { setBlockData, setBlocksData } from '../utils';
-import { EditorContext } from '../components/Editor';
+import { EditorProviderContext } from '../components/EditorProvider';
 import useToggle from './useToggle';
 
 interface Options {
@@ -41,7 +41,7 @@ const useTextAlignToggle = (
   value: string,
   ignoreSelection?: boolean
 ) => {
-  const { editorState, setEditorState } = useContext(EditorContext) || {};
+  const { editorState, setEditorState } = useContext(EditorProviderContext) || {};
 
   const handleToggle = useCallback(
     (newEditorState: EditorState): void => {

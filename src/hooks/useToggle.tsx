@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { EditorState } from 'draft-js';
 import { ACTION_TYPES } from '../redux/constants';
-import { EditorContext } from '../components/Editor';
+import { EditorProviderContext } from '../components/EditorProvider';
 import ReduxContext from '../components/ReduxContext';
 
 interface useToggleProps {
@@ -35,7 +35,7 @@ const useToggle = ({
   defaultSelected,
   forceSelection,
 }: useToggleProps) => {
-  const { editorState } = useContext(EditorContext) || {};
+  const { editorState } = useContext(EditorProviderContext) || {};
   const { dispatch } = useContext(ReduxContext);
 
   useEffect(() => {

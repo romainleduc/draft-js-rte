@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'test-utils';
 import { ContentState, EditorState, RichUtils } from 'draft-js';
-import EditorTestProvider from '../EditorTestProvider';
 import Editor from './Editor';
+import EditorProvider from '../EditorProvider';
 
 let editorState: EditorState;
 
@@ -15,12 +15,12 @@ describe('placeholder',() => {
     const newEditorState = RichUtils.toggleBlockType(editorState, 'unstyled');
   
     const { getByTestId } = render(
-      <EditorTestProvider
+      <EditorProvider
         editorState={newEditorState}
         onChange={() => { }}
       >
         <Editor wrapperProps={{ 'data-testid': 'root' }} />
-      </EditorTestProvider>
+      </EditorProvider>
     );
   
     expect(getByTestId('root')).not.toHaveClass('DraftEditor-hidePlaceholder');
@@ -30,12 +30,12 @@ describe('placeholder',() => {
     const newEditorState = RichUtils.toggleBlockType(editorState, 'other-block-type');
   
     const { getByTestId } = render(
-      <EditorTestProvider
+      <EditorProvider
         editorState={newEditorState}
         onChange={() => { }}
       >
         <Editor wrapperProps={{ 'data-testid': 'root' }} />
-      </EditorTestProvider>
+      </EditorProvider>
     );
   
     expect(getByTestId('root')).toHaveClass('DraftEditor-hidePlaceholder');
@@ -50,12 +50,12 @@ describe('placeholder',() => {
     );
   
     const { getByTestId } = render(
-      <EditorTestProvider
+      <EditorProvider
         editorState={newEditorState}
         onChange={() => { }}
       >
         <Editor wrapperProps={{ 'data-testid': 'root' }} />
-      </EditorTestProvider>
+      </EditorProvider>
     );
   
     expect(getByTestId('root')).not.toHaveClass('DraftEditor-hidePlaceholder');

@@ -8,7 +8,6 @@ import {
   DraftStyleMap,
 } from 'draft-js';
 import { indentSelection, mergeBlockData, draftToHtml } from '../../utils';
-import EditorContext from './EditorContext';
 import ReduxContext from '../ReduxContext';
 import {
   getDefaultBlockRenderer,
@@ -39,15 +38,13 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     { className, keyCommands, onChange, onClick, wrapperProps, ...rest }: EditorProps,
     ref
   ) => {
-    const { editorState, setEditorState } = useContext(EditorContext) || {};
+    const { editorState, setEditorState, customStyleMaps } = useContext(EditorProviderContext);
     const { state } = useContext(ReduxContext);
-    const { customStyleMaps } = useContext(EditorProviderContext);
 
     const shouldHidePlaceholder = () => {
-      const contentState = editorState?.getCurrentContent();
+      const contentState = editorState.getCurrentContent();
 
       return (
-        contentState &&
         !contentState.hasText() &&
         contentState.getFirstBlock().getType() !== 'unstyled'
       );
@@ -81,10 +78,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
           const indentType =
             command === IndentCommand.Increase ? 'increase' : 'decrease';
 
-          if (!setEditorState) {
-            return 'not-handled';
-          }
-
           setEditorState(
             indentSelection(editorState, contentState, indentType)
           );
@@ -93,7 +86,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         } else {
           const newState = RichUtils.handleKeyCommand(editorState, command);
 
-          if (newState && setEditorState) {
+          if (newState) {
             setEditorState(newState);
             return 'handled';
           }
@@ -104,17 +97,11 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     };
 
     const handleReturn = (): DraftHandleValue => {
-      if (editorState && setEditorState) {
-        const contentState = editorState.getCurrentContent();
-        const startKey = editorState.getSelection().getStartKey();
+      const contentState = editorState.getCurrentContent();
+      const startKey = editorState.getSelection().getStartKey();
 
-        if (contentState) {
-          setEditorState(mergeBlockData(editorState, contentState, startKey));
-          return 'handled';
-        }
-      }
-
-      return 'not-handled';
+      setEditorState(mergeBlockData(editorState, contentState, startKey));
+      return 'handled';
     };
 
     const handleChange = (newEditorState: EditorState) => {
@@ -122,7 +109,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         onChange(draftToHtml(newEditorState.getCurrentContent()));
       }
 
-      setEditorState?.(newEditorState);
+      setEditorState(newEditorState);
     };
 
     return (
@@ -135,20 +122,18 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
         onClick={(event) => onClick?.(event, editorState)}
         {...wrapperProps}
       >
-        {editorState && setEditorState && (
-          <DraftEditor
-            ref={ref as any}
-            editorState={editorState}
-            blockRendererFn={getDefaultBlockRenderer}
-            blockStyleFn={getDefaultBlockStyle}
-            keyBindingFn={getDefaultKeyBinding}
-            handleKeyCommand={handleKeyCommand}
-            handleReturn={handleReturn}
-            onChange={handleChange}
-            customStyleMap={getCustomStyleMap()}
-            {...rest}
-          />
-        )}
+        <DraftEditor
+          ref={ref as any}
+          editorState={editorState}
+          blockRendererFn={getDefaultBlockRenderer}
+          blockStyleFn={getDefaultBlockStyle}
+          keyBindingFn={getDefaultKeyBinding}
+          handleKeyCommand={handleKeyCommand}
+          handleReturn={handleReturn}
+          onChange={handleChange}
+          customStyleMap={getCustomStyleMap()}
+          {...rest}
+        />
       </div>
     );
   }

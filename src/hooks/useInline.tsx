@@ -1,6 +1,6 @@
 import { EditorState, Modifier, RichUtils } from 'draft-js';
 import React, { useCallback, useContext } from 'react';
-import { EditorContext } from '../components/Editor';
+import { EditorProviderContext } from '../components/EditorProvider';
 import EditorThemeContext from '../components/EditorProvider/EditorProviderContext';
 import useToggle from './useToggle';
 
@@ -32,7 +32,7 @@ const useInlineToggle = (
    */
   value: string
 ) => {
-  const { editorState, setEditorState } = useContext(EditorContext) || {};
+  const { editorState, setEditorState } = useContext(EditorProviderContext) || {};
   const { customStyleMaps, getCustomStyleMapOfKey } =
     useContext(EditorThemeContext);
 
