@@ -46,14 +46,11 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     const shouldHidePlaceholder = () => {
       const contentState = editorState?.getCurrentContent();
 
-      if (contentState) {
-        return (
-          !contentState.hasText() &&
-          contentState.getFirstBlock().getType() !== 'unstyled'
-        );
-      }
-
-      return false;
+      return (
+        contentState &&
+        !contentState.hasText() &&
+        contentState.getFirstBlock().getType() !== 'unstyled'
+      );
     };
 
     const getCustomStyleMap = (): DraftStyleMap => {
