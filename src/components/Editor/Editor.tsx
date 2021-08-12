@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef, useContext, useEffect } from 'react';
 import {
   EditorState,
   EditorProps as DraftEditorProps,
@@ -17,6 +17,7 @@ import {
 import EditorProviderContext from '../EditorProvider/EditorProviderContext';
 import clsx from 'clsx';
 import './Editor.css';
+import { ACTION_TYPES } from '../../redux/constants';
 
 export interface EditorProps
   extends Omit<DraftEditorProps, 'editorState' | 'onChange'> {
@@ -39,7 +40,16 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
     ref
   ) => {
     const { editorState, setEditorState, customStyleMaps } = useContext(EditorProviderContext);
-    const { state } = useContext(ReduxContext);
+    const { state, dispatch } = useContext(ReduxContext);
+
+    useEffect(() => {
+      if (keyCommands) {
+        dispatch({
+          type: ACTION_TYPES.ADD_KEY_COMMAND,
+          payload: keyCommands,
+        });
+      }
+    }, []);
 
     const shouldHidePlaceholder = () => {
       const contentState = editorState.getCurrentContent();
@@ -69,10 +79,7 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
       command: string,
       editorState: EditorState
     ): DraftHandleValue => {
-      if (
-        keyCommands?.includes(command) ||
-        state.keyCommands.includes(command)
-      ) {
+      if (state.keyCommands.includes(command)) {
         if (Object.values(IndentCommand).includes(command as IndentCommand)) {
           const contentState = editorState.getCurrentContent();
           const indentType =
@@ -83,13 +90,13 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>(
           );
 
           return 'handled';
-        } else {
-          const newState = RichUtils.handleKeyCommand(editorState, command);
+        }
 
-          if (newState) {
-            setEditorState(newState);
-            return 'handled';
-          }
+        const newState = RichUtils.handleKeyCommand(editorState, command);
+
+        if (newState) {
+          setEditorState(newState);
+          return 'handled';
         }
       }
 
