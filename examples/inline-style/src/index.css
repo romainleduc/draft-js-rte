@@ -1,0 +1,16 @@
+.DraftEditor-container {
+  border-top: solid 1px #e2e2e2;
+  margin-top: 16px;
+  padding-top: 18px;
+}
+
+.RichEditor-styleButton {
+  cursor: pointer;
+  padding: 2px;
+  margin-right: 16px;
+  color: #999;
+}
+
+.RichEditor-activeButton {
+  color: #5890ff;
+}
