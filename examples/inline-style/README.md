@@ -1,4 +1,4 @@
-# Reusable toolbar
+# Inline style
 
 ## How to use
 Download the example or [clone the repo](https://github.com/romainleduc/draft-js-rte):
