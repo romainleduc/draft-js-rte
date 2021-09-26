@@ -7,7 +7,7 @@ interface AtomicMediaConfig {
   strict?: boolean;
 }
 
-const useAtomicMedia = (config: AtomicMediaConfig) => {
+const useAtomicMedia = (config?: AtomicMediaConfig) => {
   const { editorState, setEditorState } = useContext(EditorProviderContext);
   const isStrict = config?.strict;
 
