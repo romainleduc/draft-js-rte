@@ -4,7 +4,7 @@ export type {
   EditorProviderProps,
 } from './components';
 
-export { useBlockType, useInline, useTextAlign } from './hooks';
+export { useBlockType, useInline, useTextAlign, useAtomicMedia } from './hooks';
 
 export {
   getDefaultBlockRenderer,
