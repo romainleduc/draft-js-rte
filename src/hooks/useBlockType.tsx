@@ -35,7 +35,8 @@ const useBlockTypeToggle = (
    */
   value: string
 ) => {
-  const { editorState, setEditorState } = useContext(EditorProviderContext) || {};
+  const { editorState, setEditorState } =
+    useContext(EditorProviderContext) || {};
 
   const handleToggle = useCallback(
     (newEditorState: EditorState): void => {

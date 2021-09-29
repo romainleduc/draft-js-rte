@@ -23,7 +23,16 @@ const keyCommandsReducer = (
     case ACTION_TYPES.ADD_KEY_COMMAND:
       return {
         ...state,
-        keyCommands: Array.isArray(keyCommand) ? Array.from(new Set([...state.keyCommands, ...keyCommand.map(key => key.toLowerCase())])) : Array.from(new Set([...state.keyCommands, keyCommand.toLowerCase()])),
+        keyCommands: Array.isArray(keyCommand)
+          ? Array.from(
+              new Set([
+                ...state.keyCommands,
+                ...keyCommand.map((key) => key.toLowerCase()),
+              ])
+            )
+          : Array.from(
+              new Set([...state.keyCommands, keyCommand.toLowerCase()])
+            ),
       };
     default:
       return state;
