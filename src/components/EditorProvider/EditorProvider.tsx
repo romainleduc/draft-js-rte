@@ -1,7 +1,9 @@
 import React, { useReducer } from 'react';
 import { EditorState } from 'draft-js';
 import EditorProviderContext, { CustomStyleMap } from './EditorProviderContext';
-import keyCommandsReducer, { initialState } from '../../redux/reducers/keyCommandsReducer';
+import keyCommandsReducer, {
+  initialState,
+} from '../../redux/reducers/keyCommandsReducer';
 import ReduxContext from '../ReduxContext';
 
 export interface EditorProviderProps {

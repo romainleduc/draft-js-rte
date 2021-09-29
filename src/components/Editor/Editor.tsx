@@ -36,10 +36,19 @@ enum IndentCommand {
 
 const Editor = forwardRef<HTMLDivElement, EditorProps>(
   (
-    { className, keyCommands, onChange, onClick, wrapperProps, ...rest }: EditorProps,
+    {
+      className,
+      keyCommands,
+      onChange,
+      onClick,
+      wrapperProps,
+      ...rest
+    }: EditorProps,
     ref
   ) => {
-    const { editorState, setEditorState, customStyleMaps } = useContext(EditorProviderContext);
+    const { editorState, setEditorState, customStyleMaps } = useContext(
+      EditorProviderContext
+    );
     const { state, dispatch } = useContext(ReduxContext);
 
     useEffect(() => {
