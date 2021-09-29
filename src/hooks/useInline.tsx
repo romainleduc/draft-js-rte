@@ -32,7 +32,8 @@ const useInlineToggle = (
    */
   value: string
 ) => {
-  const { editorState, setEditorState } = useContext(EditorProviderContext) || {};
+  const { editorState, setEditorState } =
+    useContext(EditorProviderContext) || {};
   const { customStyleMaps, getCustomStyleMapOfKey } =
     useContext(EditorThemeContext);
 

@@ -41,7 +41,8 @@ const useTextAlignToggle = (
   value: string,
   ignoreSelection?: boolean
 ) => {
-  const { editorState, setEditorState } = useContext(EditorProviderContext) || {};
+  const { editorState, setEditorState } =
+    useContext(EditorProviderContext) || {};
 
   const handleToggle = useCallback(
     (newEditorState: EditorState): void => {

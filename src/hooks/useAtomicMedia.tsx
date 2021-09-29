@@ -18,7 +18,7 @@ const useAtomicMedia = (config?: AtomicMediaConfig) => {
   ) => {
     const src = typeof data === 'string' ? data : data.src;
 
-    insertAtomicMedia(
+    insertAtomicMediaBlock(
       { atomicImageProps: typeof data === 'string' ? { src } : data },
       sourcesProps,
       !isStrict || (src && isImage(src)) ? 'image' : undefined,
@@ -33,7 +33,7 @@ const useAtomicMedia = (config?: AtomicMediaConfig) => {
   ) => {
     const src = typeof data === 'string' ? data : data.src;
 
-    insertAtomicMedia(
+    insertAtomicMediaBlock(
       { atomicAudioProps: typeof data === 'string' ? { src } : data },
       sourcesProps,
       !isStrict || (src && isAudio(src)) ? 'audio' : undefined,
@@ -48,7 +48,7 @@ const useAtomicMedia = (config?: AtomicMediaConfig) => {
   ) => {
     const src = typeof data === 'string' ? data : data.src;
 
-    insertAtomicMedia(
+    insertAtomicMediaBlock(
       { atomicVideoProps: typeof data === 'string' ? { src } : data },
       sourcesProps,
       !isStrict || (src && isVideo(src)) ? 'video' : undefined,
@@ -62,7 +62,7 @@ const useAtomicMedia = (config?: AtomicMediaConfig) => {
   ) => {
     const src = typeof data === 'string' ? data : data.src;
 
-    insertAtomicMedia(
+    insertAtomicMediaBlock(
       { atomicIframeProps: typeof data === 'string' ? { src } : data },
       undefined,
       !isStrict || (src && isEmbeddedLink(src)) ? 'embedded_link' : undefined,
@@ -71,6 +71,46 @@ const useAtomicMedia = (config?: AtomicMediaConfig) => {
   };
 
   const insertAtomicMedia = (
+    data:
+      | string
+      | React.ImgHTMLAttributes<HTMLImageElement>
+      | React.AudioHTMLAttributes<HTMLAudioElement>
+      | React.VideoHTMLAttributes<HTMLVideoElement>,
+    sourcesProps?: React.SourceHTMLAttributes<HTMLSourceElement>[],
+    onInserted?: () => void
+  ) => {
+    const src = typeof data === 'string' ? data : data.src;
+
+    if (!src) {
+      return;
+    }
+
+    if (isImage(src)) {
+      insertAtomicImage(
+        data as string | React.ImgHTMLAttributes<HTMLImageElement>,
+        sourcesProps,
+        onInserted
+      );
+    }
+
+    if (isAudio(src)) {
+      insertAtomicAudio(
+        data as string | React.AudioHTMLAttributes<HTMLAudioElement>,
+        sourcesProps,
+        onInserted
+      );
+    }
+
+    if (isVideo(src)) {
+      insertAtomicVideo(
+        data as string | React.VideoHTMLAttributes<HTMLVideoElement>,
+        sourcesProps,
+        onInserted
+      );
+    }
+  };
+
+  const insertAtomicMediaBlock = (
     atomicMediaProps: {
       atomicImageProps?: React.ImgHTMLAttributes<HTMLImageElement>;
       atomicVideoProps?: React.VideoHTMLAttributes<HTMLVideoElement>;
@@ -101,6 +141,7 @@ const useAtomicMedia = (config?: AtomicMediaConfig) => {
     insertAtomicAudio,
     insertAtomicVideo,
     insertAtomicEmbeddedLink,
+    insertAtomicMedia,
   };
 };
 
