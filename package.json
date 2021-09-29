@@ -1,7 +1,7 @@
 {
   "name": "draft-js-rte",
   "description": "A wysiwyg using DraftJS.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "keywords": [
     "draftjs",
