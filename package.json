@@ -10,7 +10,7 @@
     "richtext"
   ],
   "main": "lib/index.js",
-  "types": "types/index.d.ts",
+  "types": "types/src/index.d.ts",
   "scripts": {
     "webpack": "webpack",
     "dev": "npm run webpack -- --mode development --watch",
