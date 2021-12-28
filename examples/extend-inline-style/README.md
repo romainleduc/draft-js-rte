@@ -20,4 +20,4 @@ or:
 
 ## The idea behind the example
 
-This example demonstrates how you can use font family using draft-js-rte hooks.
+This example demonstrates how you can extend inline style.
