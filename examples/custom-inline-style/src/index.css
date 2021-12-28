@@ -1,0 +1,33 @@
+.DraftEditor-container {
+  border-top: solid 1px #e2e2e2;
+  margin-top: 8px;
+  padding-top: 18px;
+}
+
+.RichEditor-toolbar {
+  display: flex;
+}
+
+.RichEditor-toggleButtonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 8px;
+}
+
+.RichEditor-toggleButtonGroup-span {
+  font-size: 12px;
+  color: #c9c9c9;
+  margin-bottom: 2px;
+}
+
+.RichEditor-styleButton {
+  cursor: pointer;
+  padding: 2px;
+  margin-right: 8px;
+  color: #999;
+}
+
+.RichEditor-activeButton {
+  color: #5890ff;
+}

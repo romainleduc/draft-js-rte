@@ -4,8 +4,8 @@
 Download the example or [clone the repo](https://github.com/romainleduc/draft-js-rte):
 
 ```sh
-curl https://codeload.github.com/romainleduc/draft-js-rte/tar.gz/master | tar -xz --strip=2 draft-js-rte-master/examples/font-family
-cd font-family
+curl https://codeload.github.com/romainleduc/draft-js-rte/tar.gz/master | tar -xz --strip=2 draft-js-rte-master/examples/custom-inline-style
+cd custom-inline-style
 ```
 
 Install it and run:
