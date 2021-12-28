@@ -101,7 +101,7 @@ const useInlineToggle = (
   };
 };
 
-const useInline = (
+const useInlineStyle = (
   /**
    * The inline style value to associate with the button
    */
@@ -122,4 +122,4 @@ const useInline = (
   };
 };
 
-export default useInline;
+export default useInlineStyle;

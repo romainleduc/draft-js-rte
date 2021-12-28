@@ -1,9 +1,9 @@
 import React from "react";
-import { useInline } from "draft-js-rte";
+import { useInlineStyle } from "draft-js-rte";
 import clsx from "clsx";
 
 const InlineStyleToggleButton = ({ className, value, ...other }) => {
-  const { selected, ...inlineProps } = useInline(value);
+  const { selected, ...inlineProps } = useInlineStyle(value);
 
   return (
     <span
