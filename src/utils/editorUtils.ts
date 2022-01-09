@@ -7,7 +7,7 @@ import {
   getDefaultKeyBinding as getDraftDefaultKeyBinding,
 } from 'draft-js';
 import { Media } from '../components/Media/Media';
-import { getDefaultDecorator } from './decoratorUtils';
+import { getDefaultCompositeDecorator } from './decoratorUtils';
 
 enum IndentCommand {
   Increase = 'increase-indent',
@@ -62,6 +62,6 @@ export const createEditorStateFromHTML = (
       blocksFromHTML.contentBlocks,
       blocksFromHTML.entityMap
     ),
-    decorator || getDefaultDecorator()
+    decorator || getDefaultCompositeDecorator()
   );
 };

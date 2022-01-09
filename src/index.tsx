@@ -1,7 +1,14 @@
 export { Editor, EditorProvider } from './components';
 export type { EditorProps, EditorProviderProps } from './components';
 
-export { useBlockType, useInlineStyle, useTextAlign, useAtomicMedia } from './hooks';
+export {
+  useBlockType,
+  useInlineStyle,
+  useTextAlign,
+  useAtomicMedia,
+  useLink,
+  useEditor,
+} from './hooks';
 
 export {
   getDefaultBlockRenderer,
@@ -9,3 +16,8 @@ export {
   getDefaultKeyBinding,
   createEditorStateFromHTML,
 } from './utils/editorUtils';
+
+export {
+  getDefaultCompositeDecorator,
+  defaultDecorators,
+} from './utils/decoratorUtils';

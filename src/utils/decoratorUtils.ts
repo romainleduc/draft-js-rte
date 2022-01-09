@@ -3,19 +3,6 @@ import { findEntitiesRangeByType } from './blockUtils';
 import ImageDecorator from '../components/Decorator/ImageDecorator';
 import LinkDecorator from '../components/Decorator/LinkDecorator';
 
-export const getDefaultDecorator = () => {
-  return new CompositeDecorator([
-    {
-      strategy: findImageEntities,
-      component: ImageDecorator,
-    },
-    {
-      strategy: findLinkEntities,
-      component: LinkDecorator,
-    },
-  ]);
-};
-
 export const findImageEntities = (
   contentBlock: ContentBlock,
   callback: (start: number, end: number) => void,
@@ -30,4 +17,22 @@ export const findLinkEntities = (
   contentState: ContentState
 ) => {
   findEntitiesRangeByType(contentBlock, callback, contentState, 'LINK');
+};
+
+export const defaultDecorators = {
+  image: {
+    strategy: findImageEntities,
+    component: ImageDecorator,
+  },
+  link: {
+    strategy: findLinkEntities,
+    component: LinkDecorator,
+  },
+};
+
+export const getDefaultCompositeDecorator = () => {
+  return new CompositeDecorator([
+    defaultDecorators.image,
+    defaultDecorators.link,
+  ]);
 };
