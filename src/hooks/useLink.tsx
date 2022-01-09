@@ -10,8 +10,8 @@ import {
 import { EditorProviderContext } from '../components/EditorProvider';
 import { getTextSelection } from '../utils';
 import DraftRteUtils from '../utils/DraftRteUtils';
- 
-type Position = { start: number, end: number };
+
+type Position = { start: number; end: number };
 
 interface EntityDataSelected {
   key: string;
@@ -21,9 +21,12 @@ interface EntityDataSelected {
 }
 
 export interface UseLinkResult {
-  text: string | undefined,
+  text: string | undefined;
   data: any | undefined;
-  insert: (data: React.AnchorHTMLAttributes<HTMLAnchorElement>, text?: string) => void;
+  insert: (
+    data: React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    text?: string
+  ) => void;
   setText: (text: string) => void;
   toggle: (data: React.AnchorHTMLAttributes<HTMLAnchorElement> | null) => void;
 }
@@ -33,7 +36,7 @@ const useLink = (): UseLinkResult => {
     React.useContext(EditorProviderContext) || {};
   const selectionRef = useRef<SelectionState>();
   const currentContentRef = useRef<ContentState>();
- 
+
   useEffect(() => {
     if (selectionRef.current !== editorState.getSelection()) {
       selectionRef.current = editorState.getSelection();
@@ -43,16 +46,18 @@ const useLink = (): UseLinkResult => {
       currentContentRef.current = editorState.getCurrentContent();
     }
   }, [editorState]);
- 
-  const [entityDataSelected, text] = useMemo<[EntityDataSelected | undefined, string | undefined]>(() => {
+
+  const [entityDataSelected, text] = useMemo<
+    [EntityDataSelected | undefined, string | undefined]
+  >(() => {
     const selection = editorState.getSelection();
     const startOffset = selection.getStartOffset();
     const endOffset = selection.getEndOffset();
- 
+
     let entityWithKeySaved: { key: string; entity: EntityInstance };
     let entityDataSelected: EntityDataSelected | undefined;
     let text: string | undefined;
- 
+
     editorState
       .getCurrentContent()
       .getBlocksAsArray()
@@ -60,18 +65,18 @@ const useLink = (): UseLinkResult => {
         block.findEntityRanges(
           (character: CharacterMetadata) => {
             const key = character.getEntity();
-            
+
             if (key === null) {
               return false;
             }
-            
+
             const entity = editorState.getCurrentContent().getEntity(key);
 
             if (entity?.getType() === 'LINK') {
               entityWithKeySaved = { entity, key };
               return true;
             }
- 
+
             return false;
           },
           (start, end) => {
@@ -99,30 +104,34 @@ const useLink = (): UseLinkResult => {
       text = getTextSelection(
         editorState.getCurrentContent(),
         editorState.getSelection().isCollapsed()
-      ? new SelectionState({
-          anchorOffset: position.start,
-          anchorKey: blockKey,
-          focusOffset: position.end,
-          focusKey: blockKey,
-          isBackward: false,
-          hasFocus: true,
-        })
-      : editorState.getSelection());
+          ? new SelectionState({
+              anchorOffset: position.start,
+              anchorKey: blockKey,
+              focusOffset: position.end,
+              focusKey: blockKey,
+              isBackward: false,
+              hasFocus: true,
+            })
+          : editorState.getSelection()
+      );
     }
- 
+
     return [entityDataSelected, text];
   }, [selectionRef.current, currentContentRef.current]);
- 
-  const insert = (data: React.AnchorHTMLAttributes<HTMLAnchorElement>, text?: string): void => {
+
+  const insert = (
+    data: React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    text?: string
+  ): void => {
     const insertText = text || data.href;
 
     if (insertText && editorState.getSelection().isCollapsed()) {
       const contentStateWithEntity = editorState
         .getCurrentContent()
         .createEntity('LINK', 'MUTABLE', data);
- 
+
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
- 
+
       setEditorState(
         EditorState.push(
           editorState,
@@ -138,7 +147,7 @@ const useLink = (): UseLinkResult => {
       );
     }
   };
- 
+
   const setText = (text: string): void => {
     if (entityDataSelected) {
       const { position, blockKey, key } = entityDataSelected;
@@ -152,7 +161,7 @@ const useLink = (): UseLinkResult => {
             hasFocus: true,
           })
         : editorState.getSelection();
- 
+
       setEditorState(
         EditorState.push(
           editorState,
@@ -168,8 +177,10 @@ const useLink = (): UseLinkResult => {
       );
     }
   };
- 
-  const toggle = (data: React.AnchorHTMLAttributes<HTMLAnchorElement> | null): void => {
+
+  const toggle = (
+    data: React.AnchorHTMLAttributes<HTMLAnchorElement> | null
+  ): void => {
     const selection =
       editorState.getSelection().isCollapsed() && entityDataSelected
         ? new SelectionState({
@@ -184,7 +195,7 @@ const useLink = (): UseLinkResult => {
 
     setEditorState(DraftRteUtils.toggleLink(editorState, selection, data));
   };
- 
+
   return {
     text,
     insert,
@@ -193,5 +204,5 @@ const useLink = (): UseLinkResult => {
     toggle,
   };
 };
- 
+
 export default useLink;

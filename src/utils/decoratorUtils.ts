@@ -27,12 +27,12 @@ export const defaultDecorators = {
   link: {
     strategy: findLinkEntities,
     component: LinkDecorator,
-  }
-}
+  },
+};
 
 export const getDefaultCompositeDecorator = () => {
   return new CompositeDecorator([
     defaultDecorators.image,
     defaultDecorators.link,
-  ])
-}
+  ]);
+};

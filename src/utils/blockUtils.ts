@@ -11,49 +11,53 @@ import {
 } from 'draft-js';
 const { OrderedSet } = require('immutable');
 
-export const getTextSelection = (contentState: ContentState, selection: SelectionState, blockDelimiter?: any) => {
+export const getTextSelection = (
+  contentState: ContentState,
+  selection: SelectionState,
+  blockDelimiter?: any
+) => {
   blockDelimiter = blockDelimiter || '\n';
-  var startKey   = selection.getStartKey();
-  var endKey     = selection.getEndKey();
-  var blocks     = contentState.getBlockMap();
+  const startKey = selection.getStartKey();
+  const endKey = selection.getEndKey();
+  const blocks = contentState.getBlockMap();
 
-  var lastWasEnd = false;
-  var selectedBlock = blocks
-      .skipUntil(function(block) {
-          return block?.getKey() === startKey;
-      })
-      .takeUntil(function(block) {
-          var result = lastWasEnd;
+  let lastWasEnd = false;
+  const selectedBlock = blocks
+    .skipUntil(function (block) {
+      return block?.getKey() === startKey;
+    })
+    .takeUntil(function (block) {
+      const result = lastWasEnd;
 
-          if (block?.getKey() === endKey) {
-              lastWasEnd = true;
-          }
+      if (block?.getKey() === endKey) {
+        lastWasEnd = true;
+      }
 
-          return result;
-      });
+      return result;
+    });
 
   return selectedBlock
-      .map(function(block) {
-        if (block) {
-          var key = block.getKey();
-          var text = block.getText();
+    .map(function (block) {
+      if (block) {
+        const key = block.getKey();
+        let text = block.getText();
 
-          var start = 0;
-          var end = text.length;
+        let start = 0;
+        let end = text.length;
 
-          if (key === startKey) {
-              start = selection.getStartOffset();
-          }
-          if (key === endKey) {
-              end = selection.getEndOffset();
-          }
-
-          text = text.slice(start, end);
-          return text;
+        if (key === startKey) {
+          start = selection.getStartOffset();
         }
-      })
-      .join(blockDelimiter);
-}
+        if (key === endKey) {
+          end = selection.getEndOffset();
+        }
+
+        text = text.slice(start, end);
+        return text;
+      }
+    })
+    .join(blockDelimiter);
+};
 
 /**
  * Returns collection of blocks.
