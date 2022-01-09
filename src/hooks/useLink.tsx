@@ -21,13 +21,28 @@ interface EntityDataSelected {
 }
 
 export interface UseLinkResult {
+  /**
+   * Text of the currently selected link
+   */
   text: string | undefined;
+  /**
+   * Data of the currently selected link
+   */
   data: any | undefined;
+  /**
+   * Insert new link with text
+   */
   insert: (
     data: React.AnchorHTMLAttributes<HTMLAnchorElement>,
     text?: string
   ) => void;
+  /**
+   * Change the text of the currently selected link
+   */
   setText: (text: string) => void;
+  /**
+   * Toggles the specified link for selection. If the user's selection is reduced, will apply a new selection from the range of the selected link
+   */
   toggle: (data: React.AnchorHTMLAttributes<HTMLAnchorElement> | null) => void;
 }
 
