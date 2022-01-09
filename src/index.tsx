@@ -6,6 +6,8 @@ export {
   useInlineStyle,
   useTextAlign,
   useAtomicMedia,
+  useLink,
+  useEditor,
 } from './hooks';
 
 export {
@@ -14,3 +16,8 @@ export {
   getDefaultKeyBinding,
   createEditorStateFromHTML,
 } from './utils/editorUtils';
+
+export {
+  getDefaultCompositeDecorator,
+  defaultDecorators,
+} from './utils/decoratorUtils';
