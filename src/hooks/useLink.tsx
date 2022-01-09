@@ -86,13 +86,13 @@ const useLink = (): UseLinkResult => {
             }
 
             const entity = editorState.getCurrentContent().getEntity(key);
+            const isLink = Boolean(entity && entity.getType() === 'LINK');
 
-            if (entity?.getType() === 'LINK') {
+            if (isLink) {
               entityWithKeySaved = { entity, key };
-              return true;
             }
 
-            return false;
+            return isLink;
           },
           (start, end) => {
             if (

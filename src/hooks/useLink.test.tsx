@@ -61,7 +61,7 @@ describe('states', () => {
       EditorState.set(editorStateWithContent, {
         selection: editorStateWithContent
           .getSelection()
-          .merge({ anchorOffset: 28, focusOffset: 28 }),
+          .merge({ anchorOffset: 26, focusOffset: 26 }),
       })
     );
     expect(result.current.data.href).toBe('https://draftjs.org/');
@@ -146,12 +146,12 @@ describe('toggle', () => {
     expect(result.current.text).toBe('Editor');
   });
 
-  test('should toggle the reduced selection link', async () => {
+  test('should toggle the collapsed selection link', async () => {
     const { result } = renderLinkHook(
       EditorState.set(editorStateWithContent, {
         selection: editorStateWithContent
           .getSelection()
-          .merge({ anchorOffset: 28, focusOffset: 28 }),
+          .merge({ anchorOffset: 26, focusOffset: 26 }),
       })
     );
 
@@ -173,7 +173,7 @@ describe('toggle', () => {
       EditorState.set(editorStateWithContent, {
         selection: editorStateWithContent
           .getSelection()
-          .merge({ anchorOffset: 28, focusOffset: 28 }),
+          .merge({ anchorOffset: 26, focusOffset: 26 }),
       })
     );
 
@@ -183,5 +183,46 @@ describe('toggle', () => {
 
     expect(result.current.data).toBe(undefined);
     expect(result.current.text).toBe(undefined);
+  });
+});
+
+describe('setText', () => {
+  test('should change the text of the collapsed selection link', async () => {
+    const { result } = renderLinkHook(
+      EditorState.set(editorStateWithContent, {
+        selection: editorStateWithContent
+          .getSelection()
+          .merge({ anchorOffset: 26, focusOffset: 26 }),
+      })
+    );
+
+    act(() => {
+      result.current.setText('new text');
+    });
+
+    expect(result.current.text).toBe('new text');
+  });
+
+  test('should change the text of the selection range link', async () => {
+    const blockKey = editorStateWithContent
+      .getCurrentContent()
+      .getFirstBlock()
+      .getKey();
+    const { result } = renderLinkHook(
+      EditorState.set(editorStateWithContent, {
+        selection: new SelectionState({
+          anchorOffset: 26,
+          anchorKey: blockKey,
+          focusOffset: 34,
+          focusKey: blockKey,
+        }),
+      })
+    );
+
+    act(() => {
+      result.current.setText('new text');
+    });
+
+    expect(result.current.text).toBe('new text');
   });
 });
