@@ -44,7 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.12.11",
-    "@babel/preset-react": "^7.12.10",
+    "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.15.0",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/jest-dom": "^5.16.1",
