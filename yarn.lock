@@ -1357,7 +1357,7 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/draft-js@^0.11.4":
+"@types/draft-js@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@types/draft-js/-/draft-js-0.11.8.tgz#ef1e1dfbb5e3f1d13a8769eb5dfd282cae8b127b"
   integrity sha512-WddWQKbjbVEeJEuwS7oczvaVGsfML141ywwgpFeKE2E+NI9/Qk+AU/xTd6A7/dNsS8lf3ziubm8WugrttwQk2g==
