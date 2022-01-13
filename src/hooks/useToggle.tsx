@@ -12,8 +12,6 @@ interface useToggleProps {
   disableKeyboardShortcuts?: boolean;
   keyCommand: string;
   onToggle: (editorState: EditorState) => void;
-  defaultSelected?: boolean;
-  forceSelection?: boolean;
   onClick?: (
     event:
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -32,10 +30,8 @@ const useToggle = ({
   onToggle,
   onClick,
   onMouseDown,
-  defaultSelected,
-  forceSelection,
 }: useToggleProps) => {
-  const { editorState } = useContext(EditorProviderContext) || {};
+  const { editorState } = useContext(EditorProviderContext);
   const { dispatch } = useContext(ReduxContext);
 
   useEffect(() => {
@@ -45,28 +41,21 @@ const useToggle = ({
         payload: keyCommand,
       });
     }
-
-    if (defaultSelected) {
-      executeToggle();
-    }
   }, []);
 
   const executeToggle = useCallback(() => {
-    if (editorState) {
-      setTimeout(
-        () =>
-          onToggle(
-            forceSelection
-              ? EditorState.forceSelection(
-                  editorState,
-                  editorState.getSelection()
-                )
-              : editorState
-          ),
-        1
-      );
-    }
-  }, [onToggle, forceSelection, editorState]);
+    setTimeout(
+      () =>
+        onToggle(
+          editorState.getSelection().getHasFocus() ?
+          editorState: EditorState.forceSelection(
+            editorState,
+            editorState.getSelection()
+          )
+        ),
+      1
+    );
+  }, [onToggle, editorState]);
 
   const handleClick = (
     event:

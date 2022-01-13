@@ -12,20 +12,12 @@ const App = () => {
     EditorState.createEmpty()
   );
 
-  const editor = React.useRef(null);
-
-  React.useEffect(() => {
-    if (editor) {
-      editor.current.focus();
-    }
-  }, []);
-
   return (
     <EditorProvider editorState={editorState} onChange={setEditorState}>
       <TextAlignToggleButton value="left">Left</TextAlignToggleButton>
       <TextAlignToggleButton value="center">Center</TextAlignToggleButton>
       <TextAlignToggleButton value="right">Right</TextAlignToggleButton>
-      <Editor ref={editor} placeholder="Enter some text.." />
+      <Editor placeholder="Enter some text.." />
     </EditorProvider>
   );
 };

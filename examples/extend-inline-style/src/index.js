@@ -15,14 +15,6 @@ const App = () => {
     EditorState.createEmpty()
   );
 
-  const editor = React.useRef(null);
-
-  React.useEffect(() => {
-    if (editor) {
-      editor.current.focus();
-    }
-  }, []);
-
   return (
     <EditorProvider
       customStyleMaps={customStyleMaps}
@@ -55,7 +47,7 @@ const App = () => {
           </InlineStyleToggleButton>
         </ToggleButtonGroup>
       </EditorToolbar>
-      <Editor ref={editor} placeholder="Enter some text.." />
+      <Editor placeholder="Enter some text.." />
     </EditorProvider>
   );
 };
