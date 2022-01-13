@@ -12,14 +12,6 @@ const App = () => {
     EditorState.createEmpty()
   );
 
-  const editor = React.useRef(null);
-
-  React.useEffect(() => {
-    if (editor) {
-      editor.current.focus();
-    }
-  }, []);
-
   return (
     <EditorProvider editorState={editorState} onChange={setEditorState}>
       <InlineToggleButton value="BOLD">Bold</InlineToggleButton>
@@ -29,7 +21,7 @@ const App = () => {
         Strikethrough
       </InlineToggleButton>
       <InlineToggleButton value="CODE">Code</InlineToggleButton>
-      <Editor ref={editor} placeholder="Enter some text.." />
+      <Editor placeholder="Enter some text.." />
     </EditorProvider>
   );
 };

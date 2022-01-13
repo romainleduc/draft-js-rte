@@ -12,14 +12,6 @@ const App = () => {
     EditorState.createEmpty()
   );
 
-  const editor = React.useRef(null);
-
-  React.useEffect(() => {
-    if (editor) {
-      editor.current.focus();
-    }
-  }, []);
-
   return (
     <EditorProvider editorState={editorState} onChange={setEditorState}>
       <BlockTypeToggleButton value="unstyled">Paragraph</BlockTypeToggleButton>
@@ -41,7 +33,7 @@ const App = () => {
       <BlockTypeToggleButton value="ordered-list-item">
         OL
       </BlockTypeToggleButton>
-      <Editor ref={editor} placeholder="Enter some text.." />
+      <Editor placeholder="Enter some text.." />
     </EditorProvider>
   );
 };
