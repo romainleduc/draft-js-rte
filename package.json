@@ -43,7 +43,7 @@
   "homepage": "https://github.com/romainleduc/draft-js-rte#readme",
   "devDependencies": {
     "@babel/core": "^7.16.7",
-    "@babel/preset-env": "^7.16.8",
+    "@babel/preset-env": "^7.18.9",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@testing-library/dom": "^8.11.1",
